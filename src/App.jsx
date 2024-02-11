@@ -31,7 +31,7 @@ const App = () => {
         const height = field[0].length
         let bombCount = 38
         
-        while (bombCount != 0) {
+        while (bombCount !== 0) {
             const randomRow = Math.floor(Math.random() * height) // 14
             const randomColumn = Math.floor(Math.random() * width) // 12
 
