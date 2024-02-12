@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Field from "./Field";
 import { copyToBoolean, generateBoard, getNeighbors, revealBombs } from "./Functions";
+import Gameover from "./Gameover";
 
 const App = () => {
     const [playground, setPlayground] = useState([])
@@ -8,14 +9,20 @@ const App = () => {
     const [flagBoard, setFlagBoard] = useState([])
 
     const [toggle, setToggle] = useState(false)
+    const [restart, setRestart] = useState(false)
+    const toggleRestart = () => setRestart(!restart)
+
+    const [isGameover, setIsGameover] = useState(false)
     
     useEffect(() => {
         let field = generateBoard()
+
+        setIsGameover(false)
         
         setPlayground(field)
         setBooleanBoard(copyToBoolean(field))
         setFlagBoard(copyToBoolean(field))
-    }, [])
+    }, [restart])
     
     const renderField = () => {
         console.log(flagBoard)
@@ -56,7 +63,7 @@ const App = () => {
     }
 
     let revealOthers = (row, col) => {
-        let neighbors = getNeighbors(playground, row, col) // openField for all of them with map
+        let neighbors = getNeighbors(playground, row, col)
         neighbors.map(e => {
             if (!flagBoard[e[0]][e[1]]) {
                 openField(e[0], e[1])
@@ -68,12 +75,13 @@ const App = () => {
         let board = booleanBoard
 
         setBooleanBoard(revealBombs(playground, board))
-        setToggle(!toggle)
+        setIsGameover(true)
     }
 
     return (
         <div className="playground" style={{display: 'flex'}}>
             { renderField() }
+            { isGameover ? <Gameover restart={toggleRestart} close={() => setIsGameover(false)} /> : null }
         </div>
     )
 }
