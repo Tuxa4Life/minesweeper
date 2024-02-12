@@ -73,4 +73,23 @@ const copyToBoolean = (field) => {
     return output
 }
 
-export { generateBoard, copyToBoolean }
+const getNeighbors = (field, row, col) => {
+    let neighbors = []
+
+    if (row < field.length - 1) neighbors.push([row + 1, col])  // right 
+    if (col < field[0].length - 1) neighbors.push([row, col + 1]) // down
+
+    if (row > 0) neighbors.push([row - 1, col]) // left
+    if (col > 0) neighbors.push([row, col - 1]) // top
+
+    if (row < field.length - 1 && col <  field[0].length - 1) neighbors.push([row + 1, col + 1]) // bottom right
+    if (row > 0 && col >  0) neighbors.push([row - 1, col - 1]) // top left
+
+    if (row < field.length - 1 && col > 0) neighbors.push([row + 1, col - 1]) // top right
+    if (row > 0 && col < field[0].length) neighbors.push([row - 1, col + 1]) // bottom left
+
+
+    return neighbors
+}
+
+export { generateBoard, copyToBoolean, getNeighbors }
