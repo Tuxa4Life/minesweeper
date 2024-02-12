@@ -92,4 +92,15 @@ const getNeighbors = (field, row, col) => {
     return neighbors
 }
 
-export { generateBoard, copyToBoolean, getNeighbors }
+const revealBombs = (playground, booleanBoard) => {
+    let board = booleanBoard
+    for (let i = 0; i < playground.length; i++) {
+        for (let j = 0; j < playground[0].length; j++) {
+            if (playground[i][j] === -1) board[i][j] = true
+        }
+    }
+
+    return board
+}
+
+export { generateBoard, copyToBoolean, getNeighbors, revealBombs }

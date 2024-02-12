@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 
-const Field = ({ value, isOpen, openField }) => {
-    const [lockClick, setLockClick] = useState(false)
-
+const Field = ({ value, isOpen, openField, revealOthers, isFlagged, flagField }) => {
     const clickHandler = () => {
-        if (!lockClick) openField()
+        if (!isFlagged) openField()
     }
 
     const handleRightClick = (event) => {
         event.preventDefault()
-        if (!isOpen) setLockClick(!lockClick)
+
+        if (!isOpen)  {
+            flagField()
+        } else {
+            revealOthers()
+        }
     }
 
     return (
@@ -18,7 +21,7 @@ const Field = ({ value, isOpen, openField }) => {
             margin: '0 1px 1px 0', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: `${!isOpen ? 'pointer' : 'default'}`, 
             borderRadius: '3px'
         }}>
-            {lockClick ? '🚩' : isOpen ? value === -1 ? '💣' : value === 0 ? ' ' : value : ''}
+            {isFlagged ? '🚩' : isOpen ? value === -1 ? '💣' : value === 0 ? ' ' : value : ''}
         </div>
     )
 }
