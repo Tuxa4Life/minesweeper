@@ -15,7 +15,7 @@ const App = () => {
     const [isGameover, setIsGameover] = useState(false)
     
     useEffect(() => {
-        let field = generateBoard()
+        let field = generateBoard(12, 14)
 
         setIsGameover(false)
         
@@ -64,11 +64,16 @@ const App = () => {
 
     let revealOthers = (row, col) => {
         let neighbors = getNeighbors(playground, row, col)
-        neighbors.map(e => {
-            if (!flagBoard[e[0]][e[1]]) {
-                openField(e[0], e[1])
-            }
-        })
+        let flagCount = 0
+        neighbors.map(e => { if (flagBoard[e[0]][e[1]]) flagCount ++ })
+
+        if (flagCount === playground[row][col]) {
+            neighbors.map(e => {
+                if (!flagBoard[e[0]][e[1]]) {
+                    openField(e[0], e[1])
+                }
+            })
+        }
     }
 
     let gameover = () => {
