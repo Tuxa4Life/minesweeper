@@ -30,6 +30,8 @@ const App = () => {
         let board = booleanBoard
         board[row][col] = true 
 
+        if (playground[row][col] === -1) gameover()
+
         if (playground[row][col] === 0) {
             let neighbors = getNeighbors(playground, row, col)
 
@@ -40,6 +42,10 @@ const App = () => {
 
         setBooleanBoard(board)
         setToggle(!toggle)
+    }
+
+    let gameover = () => {
+        alert ('Game over.')
     }
 
     return (
