@@ -25,7 +25,6 @@ const Playground = () => {
     }, [restart])
     
     const renderField = () => {
-        console.log(flagBoard)
         return playground.map((row, rowIndex) => (
           <div key={rowIndex}>
             {row.map((cell, cellIndex) => (
@@ -65,10 +64,10 @@ const Playground = () => {
     let revealOthers = (row, col) => {
         let neighbors = getNeighbors(playground, row, col)
         let flagCount = 0
-        neighbors.map(e => { if (flagBoard[e[0]][e[1]]) flagCount ++ })
+        neighbors.forEach(e => { if (flagBoard[e[0]][e[1]]) flagCount ++ })
 
         if (flagCount === playground[row][col]) {
-            neighbors.map(e => {
+            neighbors.forEach(e => {
                 if (!flagBoard[e[0]][e[1]]) {
                     openField(e[0], e[1])
                 }
