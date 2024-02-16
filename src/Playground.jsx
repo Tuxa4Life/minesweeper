@@ -3,26 +3,24 @@ import Field from "./Field";
 import { copyToBoolean, generateBoard, getNeighbors, revealBombs } from "./Functions";
 import Gameover from "./Gameover";
 
-const Playground = () => {
+const Playground = ({ width, height, bombCount, restart }) => {
     const [playground, setPlayground] = useState([])
     const [booleanBoard, setBooleanBoard] = useState([])
     const [flagBoard, setFlagBoard] = useState([])
 
     const [toggle, setToggle] = useState(false)
-    const [restart, setRestart] = useState(false)
-    const toggleRestart = () => setRestart(!restart)
 
     const [isGameover, setIsGameover] = useState(false)
     
     useEffect(() => {
-        let field = generateBoard(12, 14)
+        let field = generateBoard(width, height, bombCount)
 
         setIsGameover(false)
         
         setPlayground(field)
         setBooleanBoard(copyToBoolean(field))
         setFlagBoard(copyToBoolean(field))
-    }, [restart])
+    }, [restart, width, height, bombCount])
     
     const renderField = () => {
         return playground.map((row, rowIndex) => (
@@ -85,7 +83,7 @@ const Playground = () => {
     return (
         <div className="playground" style={{display: 'flex'}}>
             { renderField() }
-            { isGameover ? <Gameover restart={toggleRestart} close={() => setIsGameover(false)} /> : null }
+            { isGameover ? <Gameover restart={restart} close={() => setIsGameover(false)} /> : null }
         </div>
     )
 }

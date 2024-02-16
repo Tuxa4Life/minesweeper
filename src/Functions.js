@@ -1,7 +1,7 @@
-const randomizeField = (field) => {
+const randomizeField = (field, initialBombCount) => {
     const width = field.length
     const height = field[0].length
-    let bombCount = 28
+    let bombCount = initialBombCount
     
     while (bombCount !== 0) {
         const randomRow = Math.floor(Math.random() * height) // 14
@@ -51,10 +51,10 @@ const createBoard = (width, height) => {
     return output
 }
 
-const generateBoard = (width, height) => {
+const generateBoard = (width, height, bombCount) => {
     let field = createBoard(width, height)
 
-    randomizeField(field)
+    randomizeField(field, bombCount)
     assignValues(field)
 
     return field
