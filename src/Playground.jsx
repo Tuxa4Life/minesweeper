@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Field from "./Field";
 import { copyToBoolean, generateBoard, getNeighbors, revealBombs } from "./Functions";
 import Gameover from "./Gameover";
+import Stats from "./Stats";
 
 const Playground = ({ width, height, bombCount, restart }) => {
     const [playground, setPlayground] = useState([])
@@ -9,14 +10,16 @@ const Playground = ({ width, height, bombCount, restart }) => {
     const [flagBoard, setFlagBoard] = useState([])
 
     const [toggle, setToggle] = useState(false)
-
     const [isGameover, setIsGameover] = useState(false)
+
+    const [visualBombs, setVisualBombs] = useState(bombCount)
     
     useEffect(() => {
         let field = generateBoard(width, height, bombCount)
 
         setIsGameover(false)
         
+        setVisualBombs(bombCount)
         setPlayground(field)
         setBooleanBoard(copyToBoolean(field))
         setFlagBoard(copyToBoolean(field))
@@ -54,6 +57,8 @@ const Playground = ({ width, height, bombCount, restart }) => {
     let flagField = (row, col) => {
         let board = flagBoard
         board[row][col] = !board[row][col]
+        if (board[row][col]) setVisualBombs(visualBombs - 1) 
+        else setVisualBombs(visualBombs + 1) 
         
         setFlagBoard(board)
         setToggle(!toggle)
@@ -81,8 +86,11 @@ const Playground = ({ width, height, bombCount, restart }) => {
     }
 
     return (
-        <div className="playground" style={{display: 'flex'}}>
-            { renderField() }
+        <div className="playground"> 
+            <Stats bombs={visualBombs} restart={restart} />
+            <div  style={{display: 'flex'}}>
+                { renderField() }
+            </div>
             { isGameover ? <Gameover restart={restart} close={() => setIsGameover(false)} /> : null }
         </div>
     )

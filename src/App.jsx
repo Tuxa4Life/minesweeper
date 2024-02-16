@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Playground from "./Playground";
 import Extras from "./Extras";
-import Stats from "./Stats";
 import { decrease, increase } from "./Functions";
 
 const App = () => {
@@ -20,10 +19,8 @@ const App = () => {
 
     return (
         <div>
-            <Stats restart={toggleRestart} />
             <Playground 
                 width={width} height={height} bombCount={bombCount} restart={toggleRestart} 
-                
             />
             <Extras 
                 addBomb={addBomb}   removeBomb={removeBomb}
