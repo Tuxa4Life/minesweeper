@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Playground from "./Playground";
 import Extras from "./Extras";
 import Stats from "./Stats";
+import { decrease, increase } from "./Functions";
 
 const App = () => {
     const [width, setWidth] = useState(12)
@@ -9,13 +10,6 @@ const App = () => {
     const [bombCount, setBombCount] = useState(28)
     const [restart, setRestart] = useState(false)
     const toggleRestart = () => setRestart(!restart)
-
-    const increase = (value, func) => { 
-        if (value + 1 < 30) func(value + 1)
-    }
-    const decrease = (value, func) => { 
-        if (value - 1 > 8) func(value - 1)
-    }
 
     const addBomb = () => {
         if (bombCount / (width * height) < 0.2) setBombCount(bombCount + 1)
