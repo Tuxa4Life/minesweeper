@@ -1,10 +1,11 @@
 import React from "react";
+import Timer from "./Timer";
 
-const Stats = ({ bombs, restart }) => {
+const Stats = ({ bombs, restart, hasStarted }) => {
     return (
         <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '15px'}}>
             <p className="ui basic label">
-                00:00
+                <Timer hasStarted={hasStarted}/>
             </p>
 
             <p className="ui basic label">

@@ -13,12 +13,14 @@ const Playground = ({ width, height, bombCount, restart }) => {
     const [isGameover, setIsGameover] = useState(false)
 
     const [visualBombs, setVisualBombs] = useState(bombCount)
+    const [hasStarted, setHasStarted] = useState(false)
     
     useEffect(() => {
         let field = generateBoard(width, height, bombCount)
 
         setIsGameover(false)
         
+        setHasStarted(false)
         setVisualBombs(bombCount)
         setPlayground(field)
         setBooleanBoard(copyToBoolean(field))
@@ -37,6 +39,7 @@ const Playground = ({ width, height, bombCount, restart }) => {
     }
 
     const openField = (row, col) => {
+        if (!hasStarted) setHasStarted(true)
         let board = booleanBoard
         board[row][col] = true 
 
@@ -81,13 +84,14 @@ const Playground = ({ width, height, bombCount, restart }) => {
     let gameover = () => {
         let board = booleanBoard
 
+        setHasStarted(false)
         setBooleanBoard(revealBombs(playground, board))
         setIsGameover(true)
     }
 
     return (
         <div className="playground"> 
-            <Stats bombs={visualBombs} restart={restart} />
+            <Stats bombs={visualBombs} restart={restart} hasStarted={hasStarted} />
             <div  style={{display: 'flex'}}>
                 { renderField() }
             </div>
