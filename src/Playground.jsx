@@ -11,7 +11,9 @@ const Playground = ({ width, height, bombCount, restart }) => {
 
     const [toggle, setToggle] = useState(false)
     const [isGameover, setIsGameover] = useState(false)
+    const [hasWon, setHasWon] = useState(false)
 
+    const [openFieldCount, setOpenFieldCount] = useState(0)
     const [visualBombs, setVisualBombs] = useState(bombCount)
     const [hasStarted, setHasStarted] = useState(false)
     
@@ -21,11 +23,17 @@ const Playground = ({ width, height, bombCount, restart }) => {
         setIsGameover(false)
         
         setHasStarted(false)
+        setOpenFieldCount(0)
+        setHasWon(0)
         setVisualBombs(bombCount)
         setPlayground(field)
         setBooleanBoard(copyToBoolean(field))
         setFlagBoard(copyToBoolean(field))
     }, [restart, width, height, bombCount])
+
+    useEffect(() => {
+        if (openFieldCount === width * height - bombCount) setHasWon(true)
+    }, [openFieldCount])
     
     const renderField = () => {
         return playground.map((row, rowIndex) => (
@@ -42,6 +50,7 @@ const Playground = ({ width, height, bombCount, restart }) => {
         if (!hasStarted) setHasStarted(true)
         let board = booleanBoard
         board[row][col] = true 
+        setOpenFieldCount(openFields => openFields + 1)
 
         if (playground[row][col] === -1) gameover()
 
@@ -95,7 +104,8 @@ const Playground = ({ width, height, bombCount, restart }) => {
             <div  style={{display: 'flex'}}>
                 { renderField() }
             </div>
-            { isGameover ? <Gameover restart={restart} close={() => setIsGameover(false)} /> : null }
+            { hasWon ? <Gameover header={'You have won!'} btnText={'Play again'} restart={restart} close={() => setHasWon(false)} /> : null }
+            { isGameover ? <Gameover header={'Game Over!'} btnText={'Restart'} restart={restart} close={() => setIsGameover(false)} /> : null }
         </div>
     )
 }
