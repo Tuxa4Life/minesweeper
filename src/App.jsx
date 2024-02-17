@@ -4,9 +4,9 @@ import Extras from "./Extras";
 import { decrease, increase } from "./Functions";
 
 const App = () => {
-    const [width, setWidth] = useState(12)
-    const [height, setHeight] = useState(14)
-    const [bombCount, setBombCount] = useState(28)
+    const [width, setWidth] = useState(30)
+    const [height, setHeight] = useState(16)
+    const [bombCount, setBombCount] = useState(99)
     const [restart, setRestart] = useState(false)
     const toggleRestart = () => setRestart(!restart)
 

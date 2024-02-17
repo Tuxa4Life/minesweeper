@@ -105,7 +105,7 @@ const revealBombs = (playground, booleanBoard) => {
 }
 
 const increase = (value, func) => { 
-    if (value + 1 < 30) func(value + 1)
+    if (value + 1 <= 30) func(value + 1)
 }
 const decrease = (value, func) => { 
     if (value - 1 > 8) func(value - 1)
